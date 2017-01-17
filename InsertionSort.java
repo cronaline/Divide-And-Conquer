@@ -25,13 +25,11 @@ public class InsertionSort{
 
     public void insertionSort(){
         int key, j;
-        System.out.println(a.length);
         for(int i = 1; i < a.length; i++){
-        System.out.println(i);
         listar();
             key = a[i];
             j = i - 1;
-            while(j > 0 && a[j] > key){
+            while(j >= 0 && a[j] > key){
                 a[j + 1] = a[j];
                 j--;
             }
@@ -44,22 +42,22 @@ public class InsertionSort{
         FileReader fr = new FileReader(archivo);    //Se crea el stream para la lectura de caracteres
         BufferedReader b = new BufferedReader(fr);  //Creacion del buffer de lectura
         String cadena = b.readLine();   //cadena es llenado con todos ls numeros en el archivo
-        String[] numeros = cadena.replaceAll("\\s", "").split(" "); //creamos un arreglo para los los numeros
-        int c[] = new int[numeros.length]; //creacion del arreglo int
-        for(int i = 0; i < c.length; i++){  //Cast y almacenamiento
+        String[] numeros = cadena.replaceAll("\\s", "").split(","); //creamos un arreglo para los los numeros
+        a = new int[numeros.length]; //creacion del arreglo int
+        for(int i = 0; i < a.length; i++){  //Cast y almacenamiento
             try{
-                c[i] = Integer.parseInt(numeros[i]);
+                a[i] = Integer.parseInt(numeros[i]);
             }catch (NumberFormatException nfe){
             };
         }
         b.close();  //Se cierra el archivo
-        a = c;  //Se asigna el arreglo de numeros al atributo de la clase
     }
 
     //Metodo que lista todos los elementos leidos del archivo, un vez que fueron guardados en el arreglo
     public void listar(){
+        System.out.println();
         for(int i = 0; i < a.length; i++){
-            System.out.print(a[i]);
+            System.out.print(a[i] );
         }
     }
 }
