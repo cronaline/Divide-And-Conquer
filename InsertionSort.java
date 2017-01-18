@@ -23,13 +23,14 @@ public class InsertionSort{
         is.listar();
     }
 
+    //Metodo que ordena los valores en la lista de menor a mayor utilizando insertionSort
     public void insertionSort(){
         int key, j;
-        for(int i = 1; i < a.length; i++){
-        listar();
-            key = a[i];
-            j = i - 1;
-            while(j >= 0 && a[j] > key){
+        for(int i = 1; i < a.length; i++){  //Indice para el elemento a comparar con los demas
+            //listar();
+            key = a[i]; //elemento elegido
+            j = i - 1;  //La comparacion empieza con los elementos anteriores al elegido
+            while(j >= 0 && a[j] > key){    //mueve los elementos anteriores y mayores al elemento elegido
                 a[j + 1] = a[j];
                 j--;
             }
