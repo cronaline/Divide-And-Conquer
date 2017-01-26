@@ -1,6 +1,6 @@
 /*
-Correspondiente a las lecturas complementarias del curso
 Insertion Sort
+Correspondiente a las lecturas complementarias del curso
 Version 1
 16/enero/2017
 */
@@ -21,6 +21,8 @@ public class InsertionSort{
         System.out.println();
         is.insertionSort();
         is.listar();
+        is.insertionSortAsc();
+        is.listar();
     }
 
     //Metodo que ordena los valores en la lista de menor a mayor utilizando insertionSort
@@ -31,6 +33,20 @@ public class InsertionSort{
             key = a[i]; //elemento elegido
             j = i - 1;  //La comparacion empieza con los elementos anteriores al elegido
             while(j >= 0 && a[j] > key){    //mueve los elementos anteriores y mayores al elemento elegido
+                a[j + 1] = a[j];
+                j--;
+            }
+            a[j + 1] = key;
+        }
+    }
+
+    //Metodo que ordena los numeros de menor a mayor 
+    public void insertionSortAsc(){
+        int key, j;
+        for(int i = 1; i < a.length; i++){
+            key = a[i];
+            j = i - 1;
+            while(j >= 0 && a[j] < key){
                 a[j + 1] = a[j];
                 j--;
             }
