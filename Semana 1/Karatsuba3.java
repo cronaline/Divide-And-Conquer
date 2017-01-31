@@ -19,14 +19,19 @@ public class Karatsuba3{
 
     public int getSize(BigInteger n){
         int size = 0;
-        BigInteger valor, residuo;
+        BigInteger valor, residuo, diez;
+        diez = new BigInteger("10");
         valor = n;
-        while(n.compareTo(10) != -1){ //si el numero es mayor a 10
+        while(valor.compareTo(diez) != -1){ //si el numero es mayor a 10
             size++;
-            residuo = b.mod()
-            valor = valor - residuo;
-            valor = valor.shiftRight();
+            residuo = n.mod(diez);
+            //System.out.println(residuo);
+            valor = valor.subtract(residuo);
+            //System.out.println("\t"+residuo);
+            valor = valor.divide(diez);
+            //System.out.println("\t\t"+valor);
         }
+        return size + 1;
     }
 
     public void leeNumeros(String archivo) throws FileNotFoundException, IOException {
