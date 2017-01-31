@@ -44,15 +44,13 @@ public class Karatsuba3{
         valor = num;
         for(int i = size, j = 0; i> 0; i--, j++){
             residuo = valor.mod(diez);
-            //System.out.println(residuo);
             if(i > mitad){
                 System.out.println(residuo);
                 veces = (int)Math.pow(10,j);
                 valor = valor.subtract(residuo);
                 valor = valor.divide(diez);
                 BigInteger corrimiento = new BigInteger(Integer.toString(veces));
-                //if(i != size)
-                    residuo = residuo.multiply(corrimiento);
+                residuo = residuo.multiply(corrimiento);
                 high = high.add(residuo);
                 System.out.println("\t"+corrimiento);
                 System.out.println(valor);
