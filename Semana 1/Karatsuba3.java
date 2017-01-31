@@ -8,6 +8,8 @@ import java.io.IOException;
 public class Karatsuba3{
     BigInteger n1;
     BigInteger n2;
+    BigInteger high = new BigInteger("0");
+    BigInteger low;
 
     public static void main(String args[]) throws FileNotFoundException, IOException {
         Karatsuba3 k = new Karatsuba3();
@@ -15,6 +17,8 @@ public class Karatsuba3{
         System.out.println(k.n1);
         System.out.println(k.n2);
         System.out.println(k.getSize(k.n1));
+        k.split(k.n1, k.getSize(k.n1));
+        System.out.println(k.high);
     }
 
     public int getSize(BigInteger n){
@@ -24,14 +28,37 @@ public class Karatsuba3{
         valor = n;
         while(valor.compareTo(diez) != -1){ //si el numero es mayor a 10
             size++;
-            residuo = n.mod(diez);
-            //System.out.println(residuo);
+            residuo = valor.mod(diez);
             valor = valor.subtract(residuo);
-            //System.out.println("\t"+residuo);
             valor = valor.divide(diez);
-            //System.out.println("\t\t"+valor);
         }
         return size + 1;
+    }
+
+    //supone la existencia de BigInteger high and low
+    public void split(BigInteger num, int size){
+        BigInteger valor, residuo, diez;
+        int mitad = size / 2;
+        int veces;
+        diez = new BigInteger("10");
+        valor = num;
+        for(int i = size, j = 0; i> 0; i--, j++){
+            residuo = valor.mod(diez);
+            //System.out.println(residuo);
+            if(i > mitad){
+                System.out.println(residuo);
+                veces = (int)Math.pow(10,j);
+                valor = valor.subtract(residuo);
+                valor = valor.divide(diez);
+                BigInteger corrimiento = new BigInteger(Integer.toString(veces));
+                //if(i != size)
+                    residuo = residuo.multiply(corrimiento);
+                high = high.add(residuo);
+                System.out.println("\t"+corrimiento);
+                System.out.println(valor);
+                System.out.println("\t"+high);
+            }
+        }
     }
 
     public void leeNumeros(String archivo) throws FileNotFoundException, IOException {
