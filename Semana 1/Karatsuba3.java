@@ -9,7 +9,7 @@ public class Karatsuba3{
     BigInteger n1;
     BigInteger n2;
     BigInteger high = new BigInteger("0");
-    BigInteger low;
+    BigInteger low = new BigInteger("0");
 
     public static void main(String args[]) throws FileNotFoundException, IOException {
         Karatsuba3 k = new Karatsuba3();
@@ -17,7 +17,7 @@ public class Karatsuba3{
         System.out.println(k.n1);
         System.out.println(k.n2);
         System.out.println(k.getSize(k.n1));
-        k.split(k.n1, k.getSize(k.n1));
+        k.split(k.n1, k.getSize(k.n1),k. high, k.low);
         System.out.println(k.high);
     }
 
@@ -36,7 +36,7 @@ public class Karatsuba3{
     }
 
     //supone la existencia de BigInteger high and low
-    public void split(BigInteger num, int size){
+    public void split(BigInteger num, int size, BigInteger high, BigInteger low){
         BigInteger valor, residuo, diez;
         int mitad = size / 2;
         int veces;
@@ -45,16 +45,28 @@ public class Karatsuba3{
         for(int i = size, j = 0; i> 0; i--, j++){
             residuo = valor.mod(diez);
             if(i > mitad){
-                System.out.println(residuo);
+                /*System.out.println(residuo);*/
+                veces = (int)Math.pow(10,j);
+                valor = valor.subtract(residuo);
+                valor = valor.divide(diez);
+                BigInteger corrimiento = new BigInteger(Integer.toString(veces));
+                residuo = residuo.multiply(corrimiento);
+                low = low.add(residuo);
+                /*System.out.println("\t"+corrimiento);
+                System.out.println(valor);
+                System.out.println("\t"+low);*/
+            }
+            else{
+                /*System.out.println(residuo);*/
                 veces = (int)Math.pow(10,j);
                 valor = valor.subtract(residuo);
                 valor = valor.divide(diez);
                 BigInteger corrimiento = new BigInteger(Integer.toString(veces));
                 residuo = residuo.multiply(corrimiento);
                 high = high.add(residuo);
-                System.out.println("\t"+corrimiento);
+                /*System.out.println("\t"+corrimiento);
                 System.out.println(valor);
-                System.out.println("\t"+high);
+                System.out.println("\t"+high);*/
             }
         }
     }
