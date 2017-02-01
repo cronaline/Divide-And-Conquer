@@ -10,6 +10,7 @@ public class Karatsuba3{
     BigInteger n2;
     BigInteger high = new BigInteger("0");
     BigInteger low = new BigInteger("0");
+    BigInteger diez = new BigInteger("10");
 
     public static void main(String args[]) throws FileNotFoundException, IOException {
         Karatsuba3 k = new Karatsuba3();
@@ -22,10 +23,28 @@ public class Karatsuba3{
         System.out.println(k.low);
     }
 
+    public  BigInteger karatsuba(BigInteger num1, BigInteger num2) {
+        if(num1 < 10 || num2 < 10){
+            return num1 * num2;
+        }
+        int size;
+        size = getSize(num1);
+        BigInteger high1 = new BigInteger("0");
+        BigInteger low1 = new BigInteger("0");
+        BigInteger high2 = new BigInteger("0");
+        BigInteger low2 = new BigInteger("0");
+        split(num1, size, high1, low1);
+        split(num1, size, high2, low2);
+        BigInteger z0 = karatsuba(low1, low2);
+        BigInteger z1 = karatsuba((low1 + high1), (low2 + high2));
+        BigInteger z0 = karatsuba(high1, high2);
+        BigInteger result = new BigInteger("0");
+        result =
+    }
+
     public int getSize(BigInteger n){
         int size = 0;
-        BigInteger valor, residuo, diez;
-        diez = new BigInteger("10");
+        BigInteger valor, residuo;
         valor = n;
         while(valor.compareTo(diez) != -1){ //si el numero es mayor a 10
             size++;
@@ -37,13 +56,12 @@ public class Karatsuba3{
     }
 
     //supone la existencia de BigInteger high and low
-    public void split(BigInteger num, int size){
-        BigInteger valor, residuo, diez;
+    public void split(BigInteger num, int size, BigInteger high, BigInteger low){
+        BigInteger valor, residuo;
         int mitad = size / 2;
         int veces, corrHigh, corrLow;
         corrHigh = 0;
         corrLow = 0;
-        diez = new BigInteger("10");
         valor = num;
         for(int i = size; i> 0; i--){
             residuo = valor.mod(diez);
@@ -79,10 +97,4 @@ public class Karatsuba3{
         b.close();
     }
 
-    /*public  BigInteger karatsuba(BigInteger num1, BigInteger num2) {
-        if(num1 < 10 || num2 < 10){
-            return num1 * num2;
-        }
-        //Calcula el tamaño de los numeros
-    }*/
 }
