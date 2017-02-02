@@ -8,41 +8,44 @@ import java.io.IOException;
 public class Karatsuba3{
     BigInteger n1;
     BigInteger n2;
-    BigInteger high = new BigInteger("0");
-    BigInteger low = new BigInteger("0");
     BigInteger diez = new BigInteger("10");
+    BigInteger res = new BigInteger("0");
 
     public static void main(String args[]) throws FileNotFoundException, IOException {
         Karatsuba3 k = new Karatsuba3();
         k.leeNumeros(args[0]);
         System.out.println(k.n1);
         System.out.println(k.n2);
-        System.out.println(k.getSize(k.n1));
-        k.low = k.splitLow(k.n1, k.getSize(k.n1));
-        System.out.println(k.low);
-        k.high = k.splitHigh(k.n1, k.getSize(k.n1));
-        System.out.println("\t" + k.high);
-        //System.out.println("\n\t\t"+k.low);
+        System.out.println("Resultado de la multiplicacion: \n");
+        k.res = k.karatsuba(k.n1, k.n2);
+        System.out.println("\t" + k.res);
     }
 
-    /*public  BigInteger karatsuba(BigInteger num1, BigInteger num2) {
-        if(num1 < 10 || num2 < 10){
-            return num1 * num2;
+    public  BigInteger karatsuba(BigInteger num1, BigInteger num2) {
+        if(num1.compareTo(diez)  == -1 || num2.compareTo(diez) == -1){ //Si num1 o num2 son menores a diez
+            BigInteger res = num1;
+            return res.multiply(num2); //n1 * n2
         }
-        int size;t
+        int size, mid;
         size = getSize(num1);
+        mid = size / 2;
         BigInteger high1 = new BigInteger("0");
         BigInteger low1 = new BigInteger("0");
         BigInteger high2 = new BigInteger("0");
         BigInteger low2 = new BigInteger("0");
-        split(num1, size, high1, low1);
-        split(num1, size, high2, low2);
+        low1 = splitLow(n1, size);
+        high1 = splitHigh(n1, size);
+        low2 = splitLow(n2, size);
+        high2 = splitHigh(n2, size);
         BigInteger z0 = karatsuba(low1, low2);
-        BigInteger z1 = karatsuba((low1 + high1), (low2 + high2));
-        BigInteger z0 = karatsuba(high1, high2);
+        BigInteger z1 = karatsuba((low1.add(high1)), (low2.add(high2)));
+        BigInteger z2 = karatsuba(high1, high2);
         BigInteger result = new BigInteger("0");
-        result =
-    }*/
+        result = z2.multiply(diez.pow(2 * mid));    //z2*10^(2*mid)
+        result = result.add((z1.subtract(z2).subtract(z0)).multiply(diez.pow(mid)));
+        result = result.add(z0);
+        return result;
+    }
 
     public int getSize(BigInteger n){
         int size = 0;
