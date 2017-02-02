@@ -18,16 +18,18 @@ public class Karatsuba3{
         System.out.println(k.n1);
         System.out.println(k.n2);
         System.out.println(k.getSize(k.n1));
-        k.split(k.n1, k.getSize(k.n1));
-        System.out.println(k.high);
+        k.low = k.splitLow(k.n1, k.getSize(k.n1));
+        k.high = k.splitHigh(k.n1, k.getSize(k.n1));
         System.out.println(k.low);
+        System.out.println("\t" + k.high);
+        //System.out.println("\n\t\t"+k.low);
     }
 
-    public  BigInteger karatsuba(BigInteger num1, BigInteger num2) {
+    /*public  BigInteger karatsuba(BigInteger num1, BigInteger num2) {
         if(num1 < 10 || num2 < 10){
             return num1 * num2;
         }
-        int size;
+        int size;t
         size = getSize(num1);
         BigInteger high1 = new BigInteger("0");
         BigInteger low1 = new BigInteger("0");
@@ -40,7 +42,7 @@ public class Karatsuba3{
         BigInteger z0 = karatsuba(high1, high2);
         BigInteger result = new BigInteger("0");
         result =
-    }
+    }*/
 
     public int getSize(BigInteger n){
         int size = 0;
@@ -55,7 +57,52 @@ public class Karatsuba3{
         return size + 1;
     }
 
-    //supone la existencia de BigInteger high and low
+    public BigInteger splitLow(BigInteger num, int size){
+        BigInteger valor, residuo;
+        BigInteger low = new BigInteger("0");
+        int mitad = size / 2;
+        int veces, corr;
+        corr = 0;
+        valor = num;
+        for(int i = 0; i < mitad; i++){
+            residuo = valor.mod(diez);
+            veces = (int)Math.pow(10,corr);
+            valor = valor.subtract(residuo);
+            valor = valor.divide(diez);
+            BigInteger corrimiento = new BigInteger(Integer.toString(veces));
+            residuo = residuo.multiply(corrimiento);
+            low = low.add(residuo);
+            corr++;
+            //System.out.println(low);
+        }
+        return low;
+    }
+
+    public BigInteger splitHigh(BigInteger num, int size){
+        BigInteger valor, residuo;
+        BigInteger high = new BigInteger("0");
+        int mitad = size / 2;
+        int veces, corr;
+        corr = 0;
+        valor = num;
+        for(int i = 0; i <= size; i++){
+            residuo = valor.mod(diez);
+            if(i >= mitad){
+                veces = (int)Math.pow(10,corr);
+                valor = valor.subtract(residuo);
+                valor = valor.divide(diez);
+                BigInteger corrimiento = new BigInteger(Integer.toString(veces));
+                residuo = residuo.multiply(corrimiento);
+                high = high.add(residuo);
+                corr++;
+                System.out.println(high);
+            }
+            valor = valor.subtract(residuo);
+            valor = valor.divide(diez);
+        }
+        return high;
+    }
+
     public void split(BigInteger num, int size, BigInteger high, BigInteger low){
         BigInteger valor, residuo;
         int mitad = size / 2;
@@ -73,6 +120,7 @@ public class Karatsuba3{
                 residuo = residuo.multiply(corrimiento);
                 low = low.add(residuo);
                 corrLow++;
+                System.out.println(low);
             }
             else{
                 veces = (int)Math.pow(10,corrHigh);
@@ -82,6 +130,7 @@ public class Karatsuba3{
                 residuo = residuo.multiply(corrimiento);
                 high = high.add(residuo);
                 corrHigh++;
+                System.out.println(high);
             }
         }
     }
