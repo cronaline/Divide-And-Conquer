@@ -19,8 +19,8 @@ public class Karatsuba3{
         System.out.println(k.n2);
         System.out.println(k.getSize(k.n1));
         k.low = k.splitLow(k.n1, k.getSize(k.n1));
-        k.high = k.splitHigh(k.n1, k.getSize(k.n1));
         System.out.println(k.low);
+        k.high = k.splitHigh(k.n1, k.getSize(k.n1));
         System.out.println("\t" + k.high);
         //System.out.println("\n\t\t"+k.low);
     }
@@ -85,20 +85,20 @@ public class Karatsuba3{
         int veces, corr;
         corr = 0;
         valor = num;
-        for(int i = 0; i <= size; i++){
+        for(int i = 0; i < size; i++){
             residuo = valor.mod(diez);
             if(i >= mitad){
-                veces = (int)Math.pow(10,corr);
+                veces = (int)Math.pow(10, corr);
                 valor = valor.subtract(residuo);
                 valor = valor.divide(diez);
                 BigInteger corrimiento = new BigInteger(Integer.toString(veces));
                 residuo = residuo.multiply(corrimiento);
                 high = high.add(residuo);
                 corr++;
-                System.out.println(high);
+            }else{
+                valor = valor.subtract(residuo);
+                valor = valor.divide(diez);
             }
-            valor = valor.subtract(residuo);
-            valor = valor.divide(diez);
         }
         return high;
     }
